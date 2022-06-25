@@ -7,14 +7,6 @@ type SubjectBlockProps = {
 
 function SubjectBlock({ title }: SubjectBlockProps) {
     const navigate = useNavigate();
-    // const colorToClassMapping = {
-    //     red: "w-16 h-16 md:w-32 md:h-32 rounded-full mx-4 bg-gradient-to-br from-red-600 to-red-400",
-    //     green: "w-16 h-16 md:w-32 md:h-32 rounded-full mx-4 bg-gradient-to-br from-green-600 to-green-400",
-    //     blue: "w-16 h-16 md:w-32 md:h-32 rounded-full mx-4 bg-gradient-to-br from-blue-600 to-blue-400",
-    //     orange: "w-16 h-16 md:w-32 md:h-32 rounded-full mx-4 bg-gradient-to-br from-orange-600 to-orange-400",
-    //     purple: "w-16 h-16 md:w-32 md:h-32 rounded-full mx-4 bg-gradient-to-br from-purple-600 to-purple-400",
-    //     brown: "w-16 h-16 md:w-32 md:h-32 rounded-full mx-4 bg-gradient-to-br from-brown-600 to-brown-400",
-    // };
 
     return (
         <div
@@ -28,9 +20,11 @@ function SubjectBlock({ title }: SubjectBlockProps) {
             }}
         >
             <div className="h-full w-full flex md:flex-col items-center md:justify-around">
-                <div
-                    className={`w-16 h-16 md:w-32 md:h-32 rounded-full mx-4 bg-gradient-to-br from-accent-600 to-accent-400`}
-                ></div>
+                <div className="w-16 h-16 md:w-32 md:h-32 rounded-full mx-4 bg-gradient-to-br from-accent-600 to-accent-300">
+                    <div className="h-full w-full flex justify-center items-center text-white text-4xl uppercase monospace">
+                        {title[0]}
+                    </div>
+                </div>
                 <div className="w-64 md:w-80 text-xl md:text-center text-gray-500 group-hover:text-gray-800 truncate ">
                     {title}
                 </div>

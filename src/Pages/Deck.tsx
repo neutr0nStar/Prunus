@@ -77,6 +77,7 @@ export default function Deck() {
                     </div>
                     <div
                         className={`bg-accent-400 text-center p-2 w-2/3 rounded cursor-pointer`}
+                        onClick={() => navigate("/Cards")}
                     >
                         Start
                     </div>
