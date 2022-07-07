@@ -1,10 +1,7 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { useEffect } from "react";
+import ReactDOM from "react-dom";
 
 export default function Modal({ children, isOpen, close }: ModalProps) {
-    if (!isOpen) {
-        return <div></div>;
-    }
-
     useEffect(() => {
         const keyDownHandler = (event: KeyboardEvent) => {
             if (event.key === "Escape") {
@@ -18,9 +15,19 @@ export default function Modal({ children, isOpen, close }: ModalProps) {
         };
     }, []);
 
-    return (
-        <div className="h-screen w-full absolute z-10 bg-black/75 backdrop-blur-sm flex justify-center items-center overflow-y-hidden">
-            <div className="h-3/5 w-4/5 md:h-3/5 md:w-2/5 bg-white rounded-lg relative p-4">
+    if (!isOpen) {
+        document.body.setAttribute("style", "overflow: auto;");
+        return <div></div>;
+    } else {
+        document.body.setAttribute("style", "overflow: hidden;");
+    }
+
+    return ReactDOM.createPortal(
+        <div
+            className="h-screen w-full absolute left-0 z-10 bg-black/75 backdrop-blur-sm flex justify-center items-center overflow-y-hidden"
+            style={{ marginTop: window.scrollY }}
+        >
+            <div className="h-3/5 w-5/6 md:h-3/5 md:w-2/5 bg-white rounded-lg relative p-4">
                 <div className="absolute top-4 right-4 cursor-pointer text-gray-500 flex justify-center items-center rounded-full">
                     <svg
                         onClick={() => close()}
@@ -40,6 +47,7 @@ export default function Modal({ children, isOpen, close }: ModalProps) {
                 </div>
                 {children}
             </div>
-        </div>
+        </div>,
+        document.getElementById("modal")!
     );
 }

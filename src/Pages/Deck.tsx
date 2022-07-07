@@ -75,6 +75,9 @@ export default function Deck() {
                     <div className="bg-gray-300 text-center p-2 w-2/3 rounded cursor-pointer">
                         Edit
                     </div>
+                    <div className="bg-red-300 text-center p-2 w-2/3 rounded cursor-pointer">
+                        Delete
+                    </div>
                     <div
                         className={`bg-accent-400 text-center p-2 w-2/3 rounded cursor-pointer`}
                         onClick={() => navigate("/Cards")}
@@ -95,9 +98,24 @@ export default function Deck() {
                             setIsOpen={b.setIsOpen}
                         />
                     ))}
-                    <div className="w-100 h-32 md:h-64 rounded-md transition-all border-2 border-dashed border-gray-500 hover:border-black hover:border-solid shadow-md cursor-pointer hover:shadow-lg group flex justify-center items-center">
+                    <div className="w-100 h-32 md:h-64 rounded-md transition-all border-2 border-dashed border-gray-500 hover:border-black hover:border-solid shadow-md cursor-pointer hover:shadow-lg group flex justify-center items-center select-none">
                         <div className="text-2xl text-gray-600 group-hover:text-black">
-                            Add New
+                            Add New Deck
+                        </div>
+                    </div>
+                    <div className="w-100 h-32 md:h-64 rounded-md transition-all border-2 border-dashed border-red-500 hover:border-red-600 hover:border-solid shadow-md cursor-pointer hover:shadow-lg group flex justify-center items-center select-none">
+                        <div
+                            onClick={() => {
+                                let res = confirm(
+                                    "Are you sure, you want to delete this subject ?"
+                                );
+                                if (res) {
+                                    alert("Deleted");
+                                }
+                            }}
+                            className="text-2xl text-red-500 group-hover:text-red-600"
+                        >
+                            Delete Subject
                         </div>
                     </div>
                 </div>
