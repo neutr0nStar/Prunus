@@ -6,6 +6,7 @@ type SubjectBlockProps = {
     title: string;
 };
 
+// Grid element
 function SubjectBlock({ title }: SubjectBlockProps) {
     const navigate = useNavigate();
 
@@ -34,40 +35,26 @@ function SubjectBlock({ title }: SubjectBlockProps) {
     );
 }
 
+// Page
 export default function Subjects() {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [newSubjectTitle, setNewSubjectTitle] = useState<string>("");
 
-    const [blocks, setBlocks] = useState<SubjectBlockProps[]>([
-        {
-            title: "Machine Learning",
-        },
-        {
-            title: "Operating System",
-        },
-        {
-            title: "Computer Networks",
-        },
-        {
-            title: "Seminar",
-        },
-        {
-            title: "Economics and Bussiness Management",
-        },
-        {
-            title: "Astronomy",
-        },
+    // Temporary data
+    const [blocks, setBlocks] = useState<string[]>([
+        "Machine Learning",
+        "Operating System",
+        "Computer Networks",
+        "Seminar",
+        "Economics and Bussiness Management",
+        "Astronomy",
     ]);
 
+    // Handle new subject creation
     const handleNewSubjectSubmit = () => {
-        console.log(newSubjectTitle);
         setBlocks([
             ...blocks,
-            {
-                title:
-                    newSubjectTitle.charAt(0).toUpperCase() +
-                    newSubjectTitle.slice(1),
-            },
+            newSubjectTitle.charAt(0).toUpperCase() + newSubjectTitle.slice(1),
         ]);
         setNewSubjectTitle("");
         return setIsModalOpen(false);
@@ -75,6 +62,7 @@ export default function Subjects() {
 
     return (
         <div className="h-full w-100 overflow-y-auto">
+            {/* New Subject Modal */}
             <Modal isOpen={isModalOpen} close={() => setIsModalOpen(false)}>
                 <div className="h-full w-100 flex justify-center items-center">
                     <form className="w-full sm:w-2/3 flex flex-col">
@@ -100,13 +88,14 @@ export default function Subjects() {
                     </form>
                 </div>
             </Modal>
+
             <div className="mx-4 md:w-2/3 md:mx-auto">
                 <div className="text-4xl font-semibold uppercase py-8 md:py-10">
                     Subjects
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6 mb-10">
                     {blocks.map((b) => (
-                        <SubjectBlock key={b.title} title={b.title} />
+                        <SubjectBlock key={b} title={b} />
                     ))}
                     <div
                         className="w-100 h-32 md:h-64 rounded-md transition-all border-2 border-dashed border-gray-500 hover:border-black hover:border-solid shadow-md cursor-pointer hover:shadow-lg group flex justify-center items-center"

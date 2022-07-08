@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Subjects from "./Pages/Subjects";
 import Deck from "./Pages/Deck";
 import Cards from "./Pages/Cards";
+import EditDeck from "./Pages/EditDeck";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                     />
                     <Route path="/subjects" element={<Subjects />} />
                     <Route path="/deck" element={<Deck />} />
+                    <Route path="/editDeck" element={<EditDeck />} />
                     <Route path="/cards" element={<Cards />} />
                 </Routes>
             </BrowserRouter>
