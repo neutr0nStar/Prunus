@@ -13,51 +13,74 @@ type CardProps = {
 };
 
 function Card({ question, answer, getNextCard }: CardProps) {
-    const [reveal, setReveal] = React.useState<boolean>(false);
-    const backClass: string = reveal
-        ? "h-full w-full absolute top-0 left-0 bg-accent-200 rounded-lg flex flex-col items-center transition-all duration-300 ease-out"
-        : "h-full w-full absolute top-0 left-0 bg-accent-200 rounded-lg flex flex-col items-center transition-all duration-300 ease-out translate-y-full opacity-0";
+    const [reveal, setReveal] = useState<boolean>(false);
 
     return (
-        <div className="relative h-4/5 w-4/5 md:h-3/4 md:w-3/5 rounded-lg shadow-accent-200 shadow-md overflow-hidden">
-            <div className="h-full w-full absolute top-0 left-0 bg-accent-500 rounded-lg flex flex-col items-center">
-                <div className="flex-1">
-                    <div className="w-full h-full px-5 text-center flex justify-center items-center text-accent-200 text-2xl">
-                        {question}
-                    </div>
-                </div>
-                <button
-                    className="p-2 mb-1 text-xl"
-                    onClick={() => setReveal((prev) => !prev)}
-                >
-                    <div className="text-accent-200 uppercase font-bold">
-                        Reveal
-                    </div>
-                </button>
-            </div>
-            <div className={backClass}>
-                <button
-                    className="absolute top-0 right-2 text-3xl"
-                    onClick={() => setReveal((prev) => !prev)}
-                >
-                    &times;
-                </button>
-                <div className="flex-1">
-                    <div className="h-full w-full px-5 text-2xl text-center flex flex-col justify-center items-center">
-                        {answer}
-                    </div>
-                </div>
-                <button
-                    className="p-2 mb-1 text-xl"
-                    onClick={() => {
-                        setReveal((prev) => !prev);
-                        getNextCard();
+        <div
+            className="h-4/5 w-4/5 md:h-3/4 md:w-3/5 rounded-lg"
+            style={{ perspective: "3000px" }}
+        >
+            <div
+                className="relative h-full w-full"
+                style={{ transformStyle: "preserve-3d" }}
+            >
+                {/* Front */}
+                <div
+                    className="h-full w-full absolute top-0 left-0 bg-accent-500 rounded-lg flex flex-col items-center transition-all duration-300 ease-out"
+                    style={{
+                        transform: reveal
+                            ? "rotateY(-180deg)"
+                            : "rotateY(0deg)",
+                        backfaceVisibility: "hidden",
                     }}
                 >
-                    <div className="text-accent-600 uppercase font-bold">
-                        Next
+                    <div className="flex-1">
+                        <div className="w-full h-full px-5 text-center flex justify-center items-center text-accent-200 text-2xl">
+                            {question}
+                        </div>
                     </div>
-                </button>
+                    <button
+                        className="p-2 mb-1 text-xl"
+                        onClick={() => setReveal((prev) => !prev)}
+                    >
+                        <div className="text-accent-200 uppercase font-bold">
+                            Reveal
+                        </div>
+                    </button>
+                </div>
+                {/* Back */}
+                <div
+                    className={
+                        "h-full w-full absolute top-0 left-0 bg-accent-200 rounded-lg flex flex-col items-center transition-all duration-300 ease-out"
+                    }
+                    style={{
+                        transform: reveal ? "rotateY(0deg)" : "rotateY(180deg",
+                        backfaceVisibility: "hidden",
+                    }}
+                >
+                    <button
+                        className="absolute top-0 right-2 text-3xl"
+                        onClick={() => setReveal((prev) => !prev)}
+                    >
+                        &times;
+                    </button>
+                    <div className="flex-1">
+                        <div className="h-full w-full px-5 text-2xl text-center flex flex-col justify-center items-center">
+                            {answer}
+                        </div>
+                    </div>
+                    <button
+                        className="p-2 mb-1 text-xl"
+                        onClick={() => {
+                            setReveal((prev) => !prev);
+                            getNextCard();
+                        }}
+                    >
+                        <div className="text-accent-600 uppercase font-bold">
+                            Next
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
     );

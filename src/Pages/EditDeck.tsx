@@ -9,11 +9,15 @@ type EditDeckRouteState = {
 type CardProps = {
     question: string;
     answer: string;
+    onClick?: Function;
 };
 
-function EditDeckBlock({ question, answer }: CardProps) {
+function EditDeckBlock({ question, answer, onClick }: CardProps) {
     return (
-        <div className="h-64 md:h-32 w-full cursor-pointer rounded-md shadow-md group hover:shadow-lg transition-all duration-200 overflow-hidden">
+        <div
+            className="h-64 md:h-32 w-full cursor-pointer rounded-md shadow-md group hover:shadow-lg transition-all duration-200 overflow-hidden"
+            onClick={() => onClick!()}
+        >
             <div className="h-full flex flex-col md:flex-row">
                 <div className="flex-1 text-lg p-2 bg-white">{question}</div>
                 <div className="flex-1 text-lg p-2 bg-accent-400 transition-all duration-200 group-hover:bg-accent-500 text-white">
@@ -79,8 +83,33 @@ export default function EditDeck() {
                             onChange={(e) => setEditAnswer(e.target.value)}
                         />
                     </div>
-                    <button className="flex-1 p-1 bg-accent-500 text-white text-lg my-2 md:mb-4 rounded">
-                        Submit
+                    <button
+                        className="flex-1 p-1 bg-accent-500 text-white text-lg my-2 md:mb-4 rounded"
+                        onClick={() => {
+                            if (isNew) {
+                                setCards([
+                                    ...cards,
+                                    {
+                                        question: editQuestion,
+                                        answer: editAnswer,
+                                    },
+                                ]);
+                                setEditQuestion("");
+                                setEditAnswer("");
+                                setIsModalOpen(false);
+                                setIsNew(false);
+                            } else {
+                                let tempCards = [...cards];
+                                tempCards[editIndex].question = editQuestion;
+                                tempCards[editIndex].answer = editAnswer;
+                                setCards(tempCards);
+                                setEditQuestion("");
+                                setEditAnswer("");
+                                setIsModalOpen(false);
+                            }
+                        }}
+                    >
+                        Done
                     </button>
                 </div>
             </Modal>
@@ -89,11 +118,18 @@ export default function EditDeck() {
                     {title}
                 </div>
                 <div className="flex flex-col gap-y-4 my-2">
-                    {cards.map((c) => (
+                    {cards.map((c, i) => (
                         <EditDeckBlock
                             key={c.question}
                             question={c.question}
                             answer={c.answer}
+                            onClick={() => {
+                                setEditIndex(i);
+                                setEditQuestion(cards[i].question);
+                                setEditAnswer(cards[i].answer);
+                                setIsNew(false);
+                                setIsModalOpen(true);
+                            }}
                         />
                     ))}
                     <div
