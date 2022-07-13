@@ -63,7 +63,7 @@ export default function Deck() {
     // if no subject is selected, go to subjects page
     useEffect(() => {
         if (location.state === null) {
-            navigate("/subjects");
+            navigate("/");
         }
     }, []);
 
