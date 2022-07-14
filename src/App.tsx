@@ -9,12 +9,11 @@ import Homepage from "./Pages/Homepage";
 
 function App() {
     return (
-        <div className="min-h-screen w-full bg-gray-200">
+        <div className="min-h-screen w-full overflow-hidden bg-gray-200">
             <BrowserRouter>
                 <Auth />
                 <Routes>
                     <Route path="/" element={<Homepage />} />
-                    <Route path="/home" element={<Homepage />} />
                     <Route path="subjects" element={<Subjects />} />
                     <Route path="deck" element={<Deck />} />
                     <Route path="editDeck" element={<EditDeck />} />

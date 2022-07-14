@@ -77,8 +77,6 @@ export default function Auth() {
         } else {
             signOut(auth);
             setIsModalOpen(false);
-            // Not working
-            navigate("/home");
         }
     };
 

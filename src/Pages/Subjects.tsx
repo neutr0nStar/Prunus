@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../Components/Modal";
+import app from "../firebase";
 
 type SubjectBlockProps = {
     title: string;
@@ -39,6 +41,19 @@ function SubjectBlock({ title }: SubjectBlockProps) {
 export default function Subjects() {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [newSubjectTitle, setNewSubjectTitle] = useState<string>("");
+    const navigate = useNavigate();
+    const auth = getAuth(app);
+
+    useEffect(() => {
+        if (auth.currentUser === null) {
+            navigate(-1);
+        }
+        onAuthStateChanged(auth, (user) => {
+            if (user === null) {
+                navigate("/");
+            }
+        });
+    }, []);
 
     // Temporary data
     const [blocks, setBlocks] = useState<string[]>([
